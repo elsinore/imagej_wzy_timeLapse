@@ -83,52 +83,52 @@ for (iRoi = 0; iRoi < nRoi; iRoi++) {
 //////
 print("\\Clear");
 if (MeanCheck == true && RawIntDent == true) {
-	 head = ""; head = head + "Time(s)" + ",";
+	 head = ""; head = head + "Time(s)";
 	for (colhead = 0; colhead < nRoi; colhead++) {
-		head = head + "Mean_of_cell" + colhead + "," + "RawIntDent_of_cell" + colhead + ",";
+		head = head + "," + "Mean_of_cell" + colhead + "," + "RawIntDent_of_cell" + colhead;
 	}
 	print(head);
 	for (row = 0; row < tf; row++) {
 		line = "";
-		line = line + row * interval + ",";
+		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
 			indexa = cola * 100 + row;
-			line = line + getResult("Mean", indexa) + ",";
-			line = line + getResult("RawIntDen", indexa) + ",";
+			line = line + "," + getResult("Mean", indexa);
+			line = line + "," + getResult("RawIntDen", indexa);
 		}
 	print(line);
 	wait(s/10);
 	}
 }
 else if (MeanCheck == true) {
-	 head = ""; head = head + "Time(s)" + ",";
+	 head = ""; head = head + "Time(s)";
 	for (colhead = 0; colhead < nRoi; colhead++) {
-		head = head + "Mean_of_cell" + colhead + ",";
+		head = head + "," + "Mean_of_cell" + colhead;
 	}
 	print(head);
 	for (row = 0; row < tf; row++) {
 		line = "";
-		line = line + row * interval + ",";
+		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
 			indexa = cola * 100 + row;
-			line = line + getResult("Mean", indexa) + ",";
+			line = line + "," + getResult("Mean", indexa);
 		}
 	print(line);
 	wait(s/1000);
 	}
 }
 else if (RawIntDent == true) {
-	 head = ""; head = head + "Time(s)" + ",";
+	 head = ""; head = head + "Time(s)";
 	for (colhead = 0; colhead < nRoi; colhead++) {
-		head = head + "RawIntDent_of_cell" + colhead + ",";
+		head = head + "," + "RawIntDent_of_cell" + colhead;
 	}
 	print(head);
 	for (row = 0; row < tf; row++) {
 		line = "";
-		line = line + row * interval + ",";
+		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
 			indexa = cola * 100 + row;
-			line = line + getResult("RawIntDen", indexa) + ",";
+			line = line + "," + getResult("RawIntDen", indexa);
 		}
 	print(line);
 	wait(s/1000);
