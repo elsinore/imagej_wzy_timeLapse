@@ -141,7 +141,7 @@ else if (RawIntDent == true) {
 	dirb = "choose the direction manually";
 selectWindow("Log");
 if (direction == dira) {
-	saveAs("Text", dirImage +name + ".csv"); 
+	saveAs("Text", dirImage +name + "00" + ".csv"); 
 }
 else if (direction == dirb) {
 	dir = getDirectory("Choose a Directory"); 
@@ -172,7 +172,7 @@ if (GeoCheck == true){
 	Array.show(id, x, y);
 	wait(100);
 	if (direction == dira) {
-		saveAs("Text", dirImage + name + "Geo" + ".csv"); 
+		saveAs("Text", dirImage + name + "Shap01" + ".csv"); 
 	}
 	else if (direction == dirb) {
 		dir = getDirectory("Choose a Directory"); 
@@ -195,7 +195,7 @@ if (GeoCheck == true){
 	Array.show(id2, x2, y2);
 	wait(100);
 	if (direction == dira) {
-		saveAs("Text", dirImage + name + "Loc" + ".csv"); 
+		saveAs("Text", dirImage + name + "Location02" + ".csv"); 
 	}
 	else if (direction == dirb) {
 		dir = getDirectory("Choose a Directory"); 
