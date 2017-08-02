@@ -145,7 +145,7 @@ if (direction == dira) {
 }
 else if (direction == dirb) {
 	dir = getDirectory("Choose a Directory"); 
-	saveAs("Text", dir +name + ".csv"); 
+	saveAs("Text", dir +name + "00" + ".csv"); 
 }
 print("\\Clear");
 run("Clear Results");
@@ -172,11 +172,11 @@ if (GeoCheck == true){
 	Array.show(id, x, y);
 	wait(100);
 	if (direction == dira) {
-		saveAs("Text", dirImage + name + "Shap01" + ".csv"); 
+		saveAs("Text", dirImage + name + "01.Shap" + ".csv"); 
 	}
 	else if (direction == dirb) {
 		dir = getDirectory("Choose a Directory"); 
-		saveAs("Text", dir + name + "Geo" + ".csv"); 
+		saveAs("Text", dir + name + "01.Shap" + ".csv"); 
 	}	
 	////////////////////////////// location /////////////////////////////
 	x2 = newArray();
@@ -195,11 +195,11 @@ if (GeoCheck == true){
 	Array.show(id2, x2, y2);
 	wait(100);
 	if (direction == dira) {
-		saveAs("Text", dirImage + name + "Location02" + ".csv"); 
+		saveAs("Text", dirImage + name + "02.Location" + ".csv"); 
 	}
 	else if (direction == dirb) {
 		dir = getDirectory("Choose a Directory"); 
-		saveAs("Text", dir + name + "Loc" + ".csv"); 
+		saveAs("Text", dir + name + "02.Location" + ".csv"); 
 	}
 	////////////end/////////////
 	run("Clear Results");
