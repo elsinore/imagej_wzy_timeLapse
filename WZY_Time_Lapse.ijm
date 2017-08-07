@@ -123,7 +123,7 @@ if (MeanCheck == true && RawIntDent == true) {
 		head = head + "," + "Mean_of_cell" + colhead + "," + "RawIntDent_of_cell" + colhead;
 	}
 	print(head);
-	for (row = 0; row < FW-1; row++) {
+	for (row = 0; row < FW; row++) {
 		line = "";
 		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
@@ -141,7 +141,7 @@ else if (MeanCheck == true) {
 		head = head + "," + "Mean_of_cell" + colhead;
 	}
 	print(head);
-	for (row = 0; row < FW-1; row++) {
+	for (row = 0; row < FW; row++) {
 		line = "";
 		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
@@ -158,7 +158,7 @@ else if (RawIntDent == true) {
 		head = head + "," + "RawIntDent_of_cell" + colhead;
 	}
 	print(head);
-	for (row = 0; row < FW-1; row++) {
+	for (row = 0; row < FW; row++) {
 		line = "";
 		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
