@@ -2,7 +2,7 @@
   //get basic information of this image 
  //tf: time frame; s: slices; c: channels; f: frames;
 //////
-run("Properties...", "channels=1 slices=100 frames=1 unit=pixel pixel_width=1 pixel_height=1 voxel_depth=1.0000000");
+run("Properties...", "unit=pixel pixel_width=1 pixel_height=1 voxel_depth=1.0000000");
 name = getInfo("image.filename"); dirImage = getInfo("image.directory");
 getDimensions(width, height, channels, slices, frames); nRoi = roiManager("count");
 c = channels; s = slices; f = frames;
