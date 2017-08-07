@@ -15,15 +15,18 @@ roiManager("show all with labels");
   //pop up a dialog to set up.
  //and test those parameters that get from dialog.
 //////
-set= newArray(0, 0, 0, 0, 0);
-set = myDialog(); 
+Dialog.create("Setting");
+title = "Enter Basic Information";
+width = 512; height = 512;
+    Dialog.addNumber("Interval(s)", 1);
+    Dialog.addMessage("Please choose the actual time frame");
+    Dialog.addChoice("Time Frame:", newArray("Channel", "Slice", "Frame"));
+    Dialog.addNumber("Frame Windows:", 90);
+    Dialog.show();
+		interval = Dialog.getNumber();
+		type = Dialog.getChoice();
+		FW = Dialog.getNumber();
 tf = 1;
-interval = set[0]; 
-type = set[1]; 
-direction = set[2]; 
-MeanCheck = set[3]; 
-RawIntDent = set[4];
-GeoCheck = set[5];
 if (type == "slice") {
 	tf = s;
 }
@@ -33,28 +36,23 @@ else if (type == "channel") {
 else if (type == "frame") {
 	tf = f;
 }
-while ((MeanCheck == 0 && RawIntDent == 0) || tf <= 1) {
+
+while (tf <= 1) {
 	wt = "Warning";
-	msg = "Please make sure at leaset choose one measurement,\n and make sure this is a time lapse image.";
+	msg = "Please choose the actual time frame.";
 	waitForUser(wt, msg);
 	Dialog.create("Setting");
-	title = "Enter Basic Parameter";
-  	width=512; height=512;
-  	  Dialog.addNumber("Interval(s)", 1);
-  	  Dialog.addMessage("Please choose the actual time frame");
-  	  Dialog.addChoice("Time Frame:", newArray("Channel", "Slice", "Frame"));
-  	  Dialog.addChoice("How to save the results:", newArray("same direction as the image", "choose the direction manually")); 
-  	  Dialog.addMessage("Please choose the measurement");
-  	  Dialog.addCheckbox("Mean", true);
-  	  Dialog.addCheckbox("Density", true);
-  	  Dialog.addCheckbox("Grographic Information", true);
-  	  Dialog.show();
-		interval = Dialog.getNumber();
-		type = Dialog.getChoice();
-		direction = Dialog.getChoice();
-		MeanCheck = Dialog.getCheckbox();
-		RawIntDent = Dialog.getCheckbox();
-		GeoCheck = Dialog.getCheckbox();
+	title = "Enter Basic Information";
+	width = 512; height = 512;
+	    Dialog.addNumber("Interval(s)", 1);
+	    Dialog.addMessage("Please choose the actual time frame");
+	    Dialog.addChoice("Time Frame:", newArray("Channel", "Slice", "Frame"));
+	    Dialog.addNumber("Frame Windows:", 90);
+	    Dialog.show();
+			interval = Dialog.getNumber();
+			type = Dialog.getChoice();
+			FW = Dialog.getNumber();
+	tf = 1;
 	if (type == "slice") {
 		tf = s;
 	}
@@ -65,6 +63,43 @@ while ((MeanCheck == 0 && RawIntDent == 0) || tf <= 1) {
 		tf = f;
 	}
 }
+
+Dialog.create("Setting");
+title = "Enter Basic Parameter";
+width=512; height=512;
+	Dialog.addSlider("Start Frame:", 1, tf - FW, 1);
+	Dialog.addChoice("How to save the results:", newArray("same direction as the image", "choose the direction manually")); 
+  	Dialog.addMessage("Please choose the measurement");
+  	Dialog.addCheckbox("Mean", true);
+  	Dialog.addCheckbox("Density", false);
+  	Dialog.addCheckbox("Grographic Information", true);
+  	Dialog.show();
+  		SF = Dialog.getNumber(); //start frame
+		direction = Dialog.getChoice();
+		MeanCheck = Dialog.getCheckbox();
+		RawIntDent = Dialog.getCheckbox();
+		GeoCheck = Dialog.getCheckbox();
+while (MeanCheck == 0 && RawIntDent == 0) {
+	wt = "Warning";
+	msg = "Please make sure at leaset choose one measurement.";
+	waitForUser(wt, msg);
+	Dialog.create("Setting");
+	title = "Enter Basic Parameter";
+	width=512; height=512;
+		Dialog.addSlider("Start Frame:", 1, tf - FW, 1);
+		Dialog.addChoice("How to save the results:", newArray("same direction as the image", "choose the direction manually")); 
+	  	Dialog.addMessage("Please choose the measurement");
+	  	Dialog.addCheckbox("Mean", true);
+	  	Dialog.addCheckbox("Density", false);
+	  	Dialog.addCheckbox("Grographic Information", true);
+	  	Dialog.show();
+	  		SF = Dialog.getNumber(); //strat frame
+			direction = Dialog.getChoice();
+			MeanCheck = Dialog.getCheckbox();
+			RawIntDent = Dialog.getCheckbox();
+			GeoCheck = Dialog.getCheckbox();
+}
+EF = SF + FW; //End frame
   //////
  //time lapse measurement of fluoresence intensity.
 //////
@@ -72,7 +107,7 @@ run("Clear Results");
 channel = "Channel"; slice = "Slice"; frame = "Frame";
 for (iRoi = 0; iRoi < nRoi; iRoi++) {
 	roiManager("select", iRoi);
-	for (iS = 1; iS < tf+1; iS++) {
+	for (iS = SF; iS < EF; iS++) {
 			wait(s/100);
 			setSlice(iS);
 			run("Measure");
@@ -88,11 +123,11 @@ if (MeanCheck == true && RawIntDent == true) {
 		head = head + "," + "Mean_of_cell" + colhead + "," + "RawIntDent_of_cell" + colhead;
 	}
 	print(head);
-	for (row = 0; row < tf; row++) {
+	for (row = 0; row < FW-1; row++) {
 		line = "";
 		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
-			indexa = cola * 100 + row;
+			indexa = cola * FW + row;
 			line = line + "," + getResult("Mean", indexa);
 			line = line + "," + getResult("RawIntDen", indexa);
 		}
@@ -106,11 +141,11 @@ else if (MeanCheck == true) {
 		head = head + "," + "Mean_of_cell" + colhead;
 	}
 	print(head);
-	for (row = 0; row < tf; row++) {
+	for (row = 0; row < FW-1; row++) {
 		line = "";
 		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
-			indexa = cola * 100 + row;
+			indexa = cola * FW + row;
 			line = line + "," + getResult("Mean", indexa);
 		}
 	print(line);
@@ -123,11 +158,11 @@ else if (RawIntDent == true) {
 		head = head + "," + "RawIntDent_of_cell" + colhead;
 	}
 	print(head);
-	for (row = 0; row < tf; row++) {
+	for (row = 0; row < FW-1; row++) {
 		line = "";
 		line = line + row * interval;
 		for (cola = 0; cola < nRoi; cola++) {
-			indexa = cola * 100 + row;
+			indexa = cola * FW + row;
 			line = line + "," + getResult("RawIntDen", indexa);
 		}
 	print(line);
@@ -209,30 +244,3 @@ if (GeoCheck == true){
 	}
 	else 
 	exit();
-	
-////////////////////////////////////// Functions ///////////////////////////////////////////
-  //////
- //define a dialog function.
-//////
-function myDialog() {
-	Dialog.create("Setting");
-	title = "Enter Basic Parameter";
-  	width=512; height=512;
-  	  Dialog.addNumber("Interval(s)", 1);
-  	  Dialog.addMessage("Please choose the actual time frame");
-  	  Dialog.addChoice("Time Frame:", newArray("Channel", "Slice", "Frame"));
-  	  Dialog.addChoice("How to save the results:", newArray("same direction as the image", "choose the direction manually")); 
-  	  Dialog.addMessage("Please choose the measurement");
-  	  Dialog.addCheckbox("Mean", true);
-  	  Dialog.addCheckbox("Density", true);
-  	  Dialog.addCheckbox("Grographic Information", true);
-  	  Dialog.show();
-		interval = Dialog.getNumber();
-		type = Dialog.getChoice();
-		direction = Dialog.getChoice();
-		MeanCheck = Dialog.getCheckbox();
-		RawIntDent = Dialog.getCheckbox();
-		GeoCheck = Dialog.getCheckbox();
-		cout = newArray(interval, type, direction, MeanCheck, RawIntDent, GeoCheck)
-	return cout;
-}
