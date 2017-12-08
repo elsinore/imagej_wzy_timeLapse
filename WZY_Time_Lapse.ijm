@@ -109,7 +109,15 @@ for (iRoi = 0; iRoi < nRoi; iRoi++) {
 	roiManager("select", iRoi);
 	for (iS = SF; iS < EF; iS++) {
 			wait(s/100);
-			setSlice(iS);
+			if (type == "slice") {
+				Stack.setChannel(iS);
+			}
+			else if (type == "channel") {
+				Stack.setSlice(iS);
+			}
+			else if (type == "frame") {
+				Stack.setFrame(iS);
+			}		
 			run("Measure");
 		}
 }
