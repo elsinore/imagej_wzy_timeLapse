@@ -30,7 +30,7 @@ tf = f;
 Dialog.create("Setting");
 title = "Enter Basic Parameter";
 width=512; height=512;
-	Dialog.addSlider("Start Frame:", 1, tf - FW, 1);
+	Dialog.addSlider("Start Frame:", 1, tf - FW + 1, 1);
 	Dialog.addChoice("How to save the results:", newArray("same directory as the image", "choose the directory manually")); 
 	Dialog.addNumber("Channel number in numberator", 1);
 	Dialog.addNumber("Channel number in denominator", 2);
@@ -78,9 +78,13 @@ if (Ratiometric == true) {
 		for (iS = SF; iS < EF; iS++) {
 			Stack.setFrame(iS);
 			Stack.setChannel(numberator);
+			wait(0);
 			run("Measure");
+			wait(0);
 			Stack.setChannel(denominator);
+			wait(0);
 			run("Measure");
+			wait(0);
 		}
 	}
 	  //////
@@ -105,7 +109,7 @@ if (Ratiometric == true) {
 				line = line + "," + result2;
 			}
 			print(line);
-			wait(s/10);
+			wait(0);
 		}
 	} else if (MeanCheck == true) {
 				head = ""; head = head + "Time(s)";
@@ -123,7 +127,7 @@ if (Ratiometric == true) {
 				line = line + "," + result1;
 			}
 			print(line);
-			wait(s/10);
+			wait(0);
 		}
 	} else if (RawIntDent == true) {
 				head = ""; head = head + "Time(s)";
@@ -141,7 +145,7 @@ if (Ratiometric == true) {
 				line = line + "," + result2;
 			}
 			print(line);
-			wait(s/10);
+			wait(0);
 		}
 	}
 	  //////
@@ -167,9 +171,11 @@ if (Ratiometric == true) {
 		for (iRoi = 0; iRoi < nRoi; iRoi++) {
 		roiManager("select", iRoi);
 		for (iS = SF; iS < EF; iS++) { // iS:inside Selection
-			wait(s/100);
+			wait(0);
 			Stack.setFrame(iS);
+			wait(0);
 			run("Measure");
+			wait(0);
 		}
 	}
 	  //////
@@ -191,7 +197,7 @@ if (Ratiometric == true) {
 				line = line + "," + getResult("RawIntDen", indexa);
 			}
 			print(line);
-			wait(s/10);
+			wait(0);
 		}
 	} else if (MeanCheck == true) {
 		head = ""; head = head + "Time(s)";
@@ -207,7 +213,7 @@ if (Ratiometric == true) {
 				line = line + "," + getResult("Mean", indexa);
 			}
 			print(line);
-			wait(s/1000);
+			wait(0);
 		}
 	} else if (RawIntDent == true) {
 		head = ""; head = head + "Time(s)";
@@ -223,7 +229,7 @@ if (Ratiometric == true) {
 				line = line + "," + getResult("RawIntDen", indexa);
 			}
 			print(line);
-			wait(s/1000);
+			wait(0);
 		}
 	}
 	  //////
@@ -262,7 +268,7 @@ if (GeoCheck == true){
 			}
 	}
 	Array.show(id, x, y);
-	wait(100);
+	wait(50);
 	if (directory == dira) {
 		saveAs("Text", dirImage + name + "01.Shap" + ".csv"); 
 	}
@@ -285,7 +291,7 @@ if (GeoCheck == true){
 		id2 = Array.concat(id2, iRoi);
 	}
 	Array.show(id2, x2, y2);
-	wait(100);
+	wait(50);
 	if (directory == dira) {
 		saveAs("Text", dirImage + name + "02.Location" + ".csv"); 
 	}
