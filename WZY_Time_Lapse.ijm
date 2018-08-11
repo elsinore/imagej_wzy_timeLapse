@@ -244,8 +244,8 @@ if (Ratiometric == true) {
 		dir = getDirectory("Choose a Directory");
 		saveAs("Text", dir + name + "00" + ".csv");
 	}
-	print("\\Cleat");
-	run("Cleat Results");
+	print("\\Clear");
+	run("Clear Results");
 	selectWindow("Log");
 	run("Close");
 	selectWindow("Results");
