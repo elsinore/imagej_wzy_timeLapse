@@ -268,7 +268,7 @@ if (GeoCheck == true){
 			}
 	}
 	Array.show(id, x, y);
-	wait(50);
+	wait(0);
 	if (directory == dira) {
 		saveAs("Text", dirImage + name + "01.Shap" + ".csv"); 
 	}
@@ -283,15 +283,15 @@ if (GeoCheck == true){
 	for (iRoi = 0; iRoi < nRoi; iRoi++) {
 		roiManager("select", iRoi);
 		run("Clear Results");
-		wait(50);
+		wait(0);
 		run("Measure");
-		wait(50);
+		wait(0);
 		x2 = Array.concat(x2, getResult("XM"));
 		y2 = Array.concat(y2, getResult("YM"));
 		id2 = Array.concat(id2, iRoi);
 	}
 	Array.show(id2, x2, y2);
-	wait(50);
+	wait(0);
 	if (directory == dira) {
 		saveAs("Text", dirImage + name + "02.Location" + ".csv"); 
 	}
